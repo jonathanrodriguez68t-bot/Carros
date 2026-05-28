@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!-- CAMBIO: Listado de categorías completamente implementado (en TripAN solo era <h2>Lista Categoria</h2>) -->
+<!-- CAMBIO: Muestra todas las categorías con sus datos y botones de acción CRUD -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categorías - Museo Sport Cars</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body { background-color: #111; color: #e0e0e0; font-family: 'Segoe UI', Arial, sans-serif; }
+        .page-header { background: linear-gradient(90deg, #0a0a0a, #1a0000); border-bottom: 2px solid #CC0000; padding: 100px 0 30px 0; }
+        .page-title { font-size:2rem; font-weight:900; letter-spacing:3px; color:#fff; }
+        .page-title span { color: #CC0000; }
+        .cat-card {
+            background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px;
+            padding: 20px; margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+        .cat-card:hover { border-color: #CC0000; }
+        .cat-card h5 { color: #fff; font-weight: 700; margin-bottom: 4px; }
+        .cat-card p { color: #888; font-size: 0.9rem; margin-bottom: 10px; }
+        .badge-activo { background: #1a3a1a; color: #4caf50; border: 1px solid #4caf50; padding: 3px 10px; border-radius:3px; font-size:0.75rem; }
+        .badge-inactivo { background: #2a2a2a; color: #777; border: 1px solid #444; padding: 3px 10px; border-radius:3px; font-size:0.75rem; }
+        .btn-editar { background:transparent; color:#ffc107; border:1px solid #ffc107; font-size:0.8rem; padding:4px 12px; }
+        .btn-editar:hover { background:#ffc107; color:#000; }
+        .btn-elim { background:transparent; color:#CC0000; border:1px solid #CC0000; font-size:0.8rem; padding:4px 12px; }
+        .btn-elim:hover { background:#CC0000; color:#fff; }
+        .btn-nueva { background:#CC0000; color:#fff; border:none; font-weight:700; letter-spacing:1px; padding:8px 22px; }
+        .btn-nueva:hover { background:#aa0000; color:#fff; }
+        .id-badge { color: #CC0000; font-weight: 700; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#0a0a0a; border-bottom:2px solid #CC0000;">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand" th:href="@{/}">
+                    <span style="color:#CC0000;">&#9632;</span>
+                    <strong style="color:#fff; letter-spacing:2px;"> MUSEO</strong>
+                    <span style="color:#CC0000; font-weight:300;"> SPORT</span>
+                </a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/}" style="color:#ccc;">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/tabla}" style="color:#ccc;">Colección</a></li>
+                        <li class="nav-item"><a class="nav-link active" th:href="@{/categorias/index}" style="color:#CC0000; font-weight:600;">Categorías</a></li>
+                    </ul>
+                    <a class="btn btn-nueva btn-sm" th:href="@{/categorias/create}">+ Nueva Categoría</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <div class="container">
+            <p style="color:#CC0000; font-size:0.85rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:4px;">Administración</p>
+            <h1 class="page-title">CATEGORÍAS <span>DEL MUSEO</span></h1>
+        </div>
+    </div>
+
+    <div class="container mt-4 pb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <span style="color:#888; font-size:0.9rem;">
+                Total: <strong style="color:#CC0000;" th:text="${categorias != null ? categorias.size() : 0}"></strong> categorías
+            </span>
+            <a class="btn btn-nueva" th:href="@{/categorias/create}">+ Nueva Categoría</a>
+        </div>
+
+        <!-- CAMBIO: Cards de categorías con CRUD completo (en TripAN era solo un <h2>) -->
+        <div th:each="cat : ${categorias}" class="cat-card">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <div class="mb-1">
+                        <span class="id-badge me-2">#<span th:text="${cat.id}"></span></span>
+                        <span th:if="${cat.activo}" class="badge-activo">ACTIVA</span>
+                        <span th:unless="${cat.activo}" class="badge-inactivo">INACTIVA</span>
+                    </div>
+                    <h5 th:text="${cat.nomCategoria}">Categoría</h5>
+                    <p th:text="${cat.descripcion}">Descripción de la categoría.</p>
+                </div>
+                <div class="d-flex gap-2 ms-3">
+                    <a th:href="@{/categorias/edit/{id}(id=${cat.id})}" class="btn btn-editar btn-sm">Editar</a>
+                    <a th:href="@{/categorias/delete/{id}(id=${cat.id})}" class="btn btn-elim btn-sm"
+                       onclick="return confirm('¿Eliminar esta categoría?')">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background:#0a0a0a; border-top:2px solid #CC0000; padding:16px 0;">
+        <div class="container text-center">
+            <p style="color:#555; font-size:0.8rem; margin:0;">&copy; 2026 <span style="color:#CC0000;">Museo Sport Cars</span></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!-- CAMBIO: Fragment renombrado a "menu-principal" (igual que TripAN) -->
+<!-- CAMBIO: Colores cambiados de dark genérico a negro con acento rojo Ferrari (#CC0000) -->
+<!-- CAMBIO: Links actualizados: Inicio, Colección (tabla marcas), Categorías -->
+<!-- CAMBIO: Botones de acción cambiados a "Nueva Marca" y "Nueva Categoría" -->
+<nav th:fragment="menu-principal" class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: #0a0a0a; border-bottom: 2px solid #CC0000;">
+    <div class="container-fluid px-4">
+
+        <!-- Brand / Logo -->
+        <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}">
+            <span style="color:#CC0000; font-size:1.5rem;">&#9632;</span>
+            <span style="font-weight:800; letter-spacing:2px; color:#fff;">MUSEO</span>
+            <span style="font-weight:300; color:#CC0000; letter-spacing:1px;">SPORT</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMuseo"
+                aria-controls="navMuseo" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMuseo">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}" style="color:#ccc; font-weight:500; letter-spacing:0.5px;">
+                        Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/tabla}" style="color:#ccc; font-weight:500;">
+                        Colección
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/categorias/index}" style="color:#ccc; font-weight:500;">
+                        Categorías
+                    </a>
+                </li>
+            </ul>
+            <div class="d-flex gap-2">
+                <a class="btn btn-sm" th:href="@{/marcas/create}"
+                   style="background-color:#CC0000; color:#fff; border:none; font-weight:600; letter-spacing:0.5px;">
+                    + Nueva Marca
+                </a>
+                <a class="btn btn-sm" th:href="@{/categorias/create}"
+                   style="background-color:transparent; color:#CC0000; border:1px solid #CC0000; font-weight:600;">
+                    + Categoría
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

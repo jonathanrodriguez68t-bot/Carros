@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- CAMBIO: Vista de detalle cambiada de Trip a Marca -->
+<!-- CAMBIO: Muestra: nombre, país, año fundación, velocidad máxima, descripción -->
+<!-- CAMBIO: Botones: Editar y Volver a colección -->
+<!-- CAMBIO: Diseño oscuro con acento rojo -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title th:text="${'Museo | ' + (marca != null ? marca.nombre : 'Detalle')}">Museo Sport Cars</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <style>
+        body { background-color: #111; color: #e0e0e0; font-family: 'Segoe UI', Arial, sans-serif; }
+
+        .detalle-section { padding: 100px 0 60px 0; }
+
+        .marca-hero {
+            background: linear-gradient(135deg, #0a0a0a, #1a0000);
+            border: 1px solid #2a2a2a;
+            border-left: 4px solid #CC0000;
+            border-radius: 8px;
+            padding: 40px;
+        }
+        .marca-hero img {
+            max-width: 100%;
+            max-height: 220px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 20px rgba(204,0,0,0.4));
+        }
+        .marca-nombre { font-size: 2.5rem; font-weight: 900; color: #fff; letter-spacing: 2px; }
+        .marca-pais {
+            font-size: 0.85rem; font-weight: 700; color: #CC0000;
+            letter-spacing: 3px; text-transform: uppercase;
+        }
+        .badge-destacado {
+            background: #CC0000; color: #fff;
+            font-size: 0.7rem; padding: 4px 12px;
+            border-radius: 2px; font-weight: 700; letter-spacing: 1px;
+        }
+
+        /* Stats */
+        .stat-box {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            padding: 16px 20px;
+            text-align: center;
+        }
+        .stat-box .stat-val {
+            font-size: 1.6rem; font-weight: 800; color: #CC0000;
+        }
+        .stat-box .stat-lbl {
+            font-size: 0.75rem; color: #777; letter-spacing: 1px; text-transform: uppercase;
+        }
+
+        /* Descripción */
+        .desc-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 24px;
+            margin-top: 24px;
+        }
+        .desc-card h5 {
+            color: #CC0000; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+            font-size: 0.85rem; margin-bottom: 12px;
+        }
+        .desc-card p { color: #bbb; line-height: 1.8; }
+
+        .btn-editar {
+            background: #CC0000; color: #fff; border: none;
+            font-weight: 700; padding: 10px 24px;
+        }
+        .btn-editar:hover { background: #aa0000; color: #fff; }
+        .btn-volver {
+            background: transparent; color: #888;
+            border: 1px solid #333; padding: 10px 20px;
+        }
+        .btn-volver:hover { border-color: #666; color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#0a0a0a; border-bottom:2px solid #CC0000;">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand" th:href="@{/}">
+                    <span style="color:#CC0000;">&#9632;</span>
+                    <strong style="color:#fff; letter-spacing:2px;"> MUSEO</strong>
+                    <span style="color:#CC0000; font-weight:300;"> SPORT</span>
+                </a>
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item"><a class="nav-link" th:href="@{/}" style="color:#ccc;">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/tabla}" style="color:#ccc;">Colección</a></li>
+                        <li class="nav-item"><a class="nav-link" th:href="@{/categorias/index}" style="color:#ccc;">Categorías</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="detalle-section">
+        <div class="container">
+            <div class="row">
+
+                <!-- Columna imagen -->
+                <div class="col-md-4 mb-4">
+                    <div class="marca-hero text-center">
+                        <img th:src="@{/images/{img}(img=${marca.imagen})}"
+                             th:alt="${marca.nombre}"
+                             onerror="this.style.opacity='0.2'">
+                        <div th:if="${marca.destacado == 1}" class="mt-3">
+                            <span class="badge-destacado">&#9733; DESTACADO DEL MUSEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna info -->
+                <div class="col-md-8">
+                    <!-- CAMBIO: Nombre y país de la marca en lugar del nombre del trip -->
+                    <p class="marca-pais mb-1" th:text="${marca.paisOrigen}"></p>
+                    <h1 class="marca-nombre" th:text="${marca.nombre}"></h1>
+                    <hr style="border-color:#CC0000; width:60px; margin-left:0;">
+
+                    <!-- Stats: Año y Velocidad -->
+                    <!-- CAMBIO: En TripAN había fecha y costo; aquí es anioFundacion y velocidadMax -->
+                    <div class="row g-3 mt-2">
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="stat-val" th:text="${marca.anioFundacion}"></div>
+                                <div class="stat-lbl">Año de Fundación</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="stat-val" th:text="${marca.velocidadMax + ' km/h'}"></div>
+                                <div class="stat-lbl">Velocidad Máxima</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="stat-val" th:text="${marca.id}"></div>
+                                <div class="stat-lbl">ID en Museo</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="desc-card">
+                        <h5>&#9632; Historia y Legado</h5>
+                        <!-- CAMBIO: descripcion es ahora historia de la marca -->
+                        <p th:text="${marca.descripcion}">Sin descripción disponible.</p>
+                    </div>
+
+                    <!-- Acciones -->
+                    <div class="d-flex gap-2 mt-4">
+                        <!-- CAMBIO: Botón editar en lugar de "Comprar" de TripAN -->
+                        <a th:href="@{/marcas/edit/{id}(id=${marca.id})}" class="btn btn-editar">
+                            &#9998; Editar Marca
+                        </a>
+                        <a th:href="@{/tabla}" class="btn btn-volver">
+                            &larr; Volver a Colección
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer style="background:#0a0a0a; border-top:2px solid #CC0000; padding:16px 0; margin-top:30px;">
+        <div class="container text-center">
+            <p style="color:#555; font-size:0.8rem; margin:0;">
+                &copy; 2026 <span style="color:#CC0000;">Museo Sport Cars</span> | Spring Boot MVC
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
