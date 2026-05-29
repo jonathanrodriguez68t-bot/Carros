@@ -9,6 +9,7 @@ import com.museo.models.Marca;
 // CAMBIO: Agregado método eliminar para completar el CRUD
 public interface IMarcaServices {
     List<Marca> buscarTodo();
+    List<Marca> buscarPorCategoria(Integer idCategoria);
     Marca buscarPorId(Integer idMarca);
     void guardar(Marca marca);
     void eliminar(Integer idMarca);  // NUEVO: TripAN no tenía eliminar implementado

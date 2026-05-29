@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-// CAMBIO: Clase renombrada de HomeController (misma lógica)
-// CAMBIO: Usa IMarcaServices en vez de ITripServices
-// CAMBIO: Ruta /tabla muestra marcas (antes mostraba trips)
-// CAMBIO: Se elimina la referencia a RolService, se agrega CategoriaServices
+
 @Controller
 public class HomeController {
 
@@ -32,17 +30,36 @@ public class HomeController {
         this.museoCarrosApplication = museoCarrosApplication;
     }
 
-    // CAMBIO: "/" ahora muestra marcas en lugar de trips
     @GetMapping("/")
-    public String mostrarHome(Model model) {
-        List<Marca> lista = marcaServices.buscarTodo();
+    public String mostrarHome(
+            @RequestParam(value = "buscar", required = false, defaultValue = "") String buscar,
+            @RequestParam(value = "idCategoria", required = false) Integer idCategoria,
+            Model model) {
+
+        List<Marca> lista;
+
+        if (idCategoria != null) {
+            lista = marcaServices.buscarPorCategoria(idCategoria);
+        } else {
+            lista = marcaServices.buscarTodo();
+        }
+
+        // Filtrar por nombre si escribieron algo
+        if (!buscar.isEmpty()) {
+            lista = lista.stream()
+                    .filter(m -> m.getNombre().toLowerCase().contains(buscar.toLowerCase()))
+                    .collect(java.util.stream.Collectors.toList());
+        }
+
         List<Categoria> categorias = categoriaServices.buscarTodo();
         model.addAttribute("marcas", lista);
         model.addAttribute("categorias", categorias);
+        model.addAttribute("buscar", buscar);
+        model.addAttribute("idCategoria", idCategoria);
         return "home";
     }
 
-    // CAMBIO: "/tabla" ahora muestra tabla de marcas
+    
     @GetMapping("/tabla")
     public String mostrarTabla(Model model) {
         List<Marca> lista = marcaServices.buscarTodo();
@@ -50,7 +67,7 @@ public class HomeController {
         return "tabla";
     }
 
-    // CAMBIO: "/categorias" muestra tabla de categorías
+    
     @GetMapping("/tablaCategorias")
     public String mostrarTablaCategorias(Model model) {
         List<Categoria> lista = categoriaServices.buscarTodo();
