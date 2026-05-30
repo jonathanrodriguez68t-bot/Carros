@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!-- CAMBIO: Tabla cambiada de trips a marcas -->
-<!-- CAMBIO: Columnas: Imagen, ID, Marca, País, Año Fundación, Vel. Máxima, Destacado, Acciones -->
-<!-- CAMBIO: Botones ahora incluyen Detalle, Editar y Eliminar (CRUD completo) -->
-<!-- CAMBIO: Colores adaptados al tema del museo (negro/rojo) -->
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +42,7 @@
         .badge-si { background-color: #CC0000; color: #fff; padding: 4px 10px; border-radius: 3px; font-size:0.75rem; font-weight:700; }
         .badge-no { background-color: #333; color: #888; padding: 4px 10px; border-radius: 3px; font-size:0.75rem; font-weight:700; }
 
-        /* Botones CRUD */
+        /* BOTONES ASI BIEN PRO DEL CRUD */
         .btn-ver    { background:transparent; color:#4da6ff; border:1px solid #4da6ff; font-size:0.8rem; padding:4px 12px; }
         .btn-ver:hover { background:#4da6ff; color:#000; }
         .btn-editar { background:transparent; color:#ffc107; border:1px solid #ffc107; font-size:0.8rem; padding:4px 12px; }
@@ -64,7 +61,7 @@
 </head>
 <body>
 
-    <!-- Navbar inline (igual que tabla.html de TripAN pero con el tema del museo) -->
+   
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#0a0a0a; border-bottom:2px solid #CC0000;">
             <div class="container-fluid px-4">
@@ -91,7 +88,7 @@
         </nav>
     </header>
 
-    <!-- Page header -->
+    <!-- HEADER AQUIIIIIIIIIIII -->
     <div class="page-header">
         <div class="container">
             <p class="mb-1" style="color:#CC0000; font-size:0.85rem; letter-spacing:3px; text-transform:uppercase;">Administración</p>
@@ -109,7 +106,7 @@
 
         <div class="table-dark-custom shadow">
             <div class="table-responsive">
-                <!-- CAMBIO: Columnas adaptadas de Trip (destino, fecha, costo) a Marca (marca, país, año, velocidad) -->
+                
                 <table class="table mb-0">
                     <thead>
                         <tr>
@@ -124,7 +121,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- CAMBIO: th:each sobre "marcas" en vez de "trips" -->
+                        
                         <tr th:each="marca : ${marcas}">
                             <td>
                                 <img th:src="@{/images/{img}(img=${marca.imagen})}"
@@ -141,7 +138,7 @@
                                 <span th:if="${marca.destacado == 1}" class="badge-si">SÍ</span>
                                 <span th:unless="${marca.destacado == 1}" class="badge-no">NO</span>
                             </td>
-                            <!-- CAMBIO: 3 botones: Ver, Editar, Eliminar (CRUD completo) -->
+                            
                             <td class="text-center">
                                 <div class="d-flex gap-1 justify-content-center">
                                     <a th:href="@{/marcas/view/{id}(id=${marca.id})}" class="btn btn-ver btn-sm">Ver</a>

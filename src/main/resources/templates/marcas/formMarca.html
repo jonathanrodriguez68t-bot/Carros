@@ -97,13 +97,13 @@
                 <div class="col-lg-8">
 
                     <div class="card-form">
-                        <!-- CAMBIO: Título dinámico usando variable "accion" -->
+                        <!-- TITULO GOOD -->
                         <div class="card-header">
                             <h4>&#9632; <span th:text="${accion ?: 'Formulario'}"></span> <span style="color:#fff;">de Marca</span></h4>
                         </div>
                         <div class="card-body">
 
-                            <!-- CAMBIO: action cambiado a /marcas/save, th:object apunta a marca -->
+                            <!-- AQUI ES DONDE APUNTA A LA MARCA -->
                             <form th:action="@{/marcas/save}" method="post" th:object="${marca}">
 
                                 <!-- Campo oculto para el id (necesario para editar) -->

@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!-- CAMBIO: Vista de detalle cambiada de Trip a Marca -->
-<!-- CAMBIO: Muestra: nombre, país, año fundación, velocidad máxima, descripción -->
-<!-- CAMBIO: Botones: Editar y Volver a colección -->
-<!-- CAMBIO: Diseño oscuro con acento rojo -->
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -117,15 +114,15 @@
                     </div>
                 </div>
 
-                <!-- Columna info -->
+    
                 <div class="col-md-8">
-                    <!-- CAMBIO: Nombre y país de la marca en lugar del nombre del trip -->
+                    <!-- Nombre y pais de la marca AQUI xd -->
                     <p class="marca-pais mb-1" th:text="${marca.paisOrigen}"></p>
                     <h1 class="marca-nombre" th:text="${marca.nombre}"></h1>
                     <hr style="border-color:#CC0000; width:60px; margin-left:0;">
 
-                    <!-- Stats: Año y Velocidad -->
-                    <!-- CAMBIO: En TripAN había fecha y costo; aquí es anioFundacion y velocidadMax -->
+   
+                    <!--Aqui esta el Año de fundacion  -->
                     <div class="row g-3 mt-2">
                         <div class="col-4">
                             <div class="stat-box">
@@ -147,16 +144,16 @@
                         </div>
                     </div>
 
-                    <!-- Descripción -->
+                    <!-- Aqui se realiza la descripcion del carro -->
                     <div class="desc-card">
                         <h5>&#9632; Historia y Legado</h5>
-                        <!-- CAMBIO: descripcion es ahora historia de la marca -->
+                       
                         <p th:text="${marca.descripcion}">Sin descripción disponible.</p>
                     </div>
 
-                    <!-- Acciones -->
+                    
                     <div class="d-flex gap-2 mt-4">
-                        <!-- CAMBIO: Botón editar en lugar de "Comprar" de TripAN -->
+                        <!-- Boton de editar la marca-->
                         <a th:href="@{/marcas/edit/{id}(id=${marca.id})}" class="btn btn-editar">
                             &#9998; Editar Marca
                         </a>

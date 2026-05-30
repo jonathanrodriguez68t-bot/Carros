@@ -9,7 +9,7 @@
 		<relativePath/>
 	</parent>
 
-	<!-- CAMBIO: groupId y artifactId cambiados de com.trips/trips a com.museo/museo -->
+	
 	<groupId>com.museo</groupId>
 	<artifactId>museo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
