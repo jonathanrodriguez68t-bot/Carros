@@ -14,11 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.museo.models.Marca;
 import com.museo.services.IMarcaServices;
 
-// CAMBIO: Clase renombrada de TripController a MarcaController
-// CAMBIO: @RequestMapping cambiado de "/trips" a "/marcas"
-// CAMBIO: Método guardar ahora llama marcaServices (antes tripServices)
-// CAMBIO: Método eliminar ahora SÍ elimina de la lista (en TripAN solo mostraba mensaje)
-// CAMBIO: Nuevo método editarForm y editar para actualizar (CRUD completo)
+
 @Controller
 @RequestMapping("/marcas")
 public class MarcaController {
@@ -26,7 +22,7 @@ public class MarcaController {
     @Autowired
     private IMarcaServices marcaServices;
 
-    // CREATE - mostrar formulario vacío
+    
     @GetMapping("/create")
     public String crear(Model model) {
         model.addAttribute("marca", new Marca());
@@ -34,7 +30,7 @@ public class MarcaController {
         return "marcas/formMarca";
     }
 
-    // CREATE - guardar nueva marca (POST)
+
     @PostMapping("/save")
     public String guardar(Marca marca, BindingResult result) {
         if (result.hasErrors()) {
@@ -48,7 +44,7 @@ public class MarcaController {
         return "redirect:/tabla";
     }
 
-    // READ - ver detalle de una marca
+
     @GetMapping("/view/{id}")
     public String verDetalle(@PathVariable("id") int idMarca, Model model) {
         Marca marca = marcaServices.buscarPorId(idMarca);
@@ -57,8 +53,7 @@ public class MarcaController {
         return "marcas/detalle";
     }
 
-    // UPDATE - mostrar formulario con datos precargados
-    // NUEVO: En TripAN no estaba implementado el edit
+ 
     @GetMapping("/edit/{id}")
     public String editarForm(@PathVariable("id") int idMarca, Model model) {
         Marca marca = marcaServices.buscarPorId(idMarca);
@@ -67,8 +62,7 @@ public class MarcaController {
         return "marcas/formMarca";
     }
 
-    // DELETE - eliminar marca por id
-    // CAMBIO: En TripAN "/delete" solo mostraba un mensaje; aquí SÍ elimina
+    
     @GetMapping("/delete/{id}")
     public String eliminar(@PathVariable("id") int idMarca, Model model) {
         marcaServices.eliminar(idMarca);

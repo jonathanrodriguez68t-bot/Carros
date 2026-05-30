@@ -44,7 +44,7 @@ public class HomeController {
             lista = marcaServices.buscarTodo();
         }
 
-        // Filtrar por nombre si escribieron algo
+      
         if (!buscar.isEmpty()) {
             lista = lista.stream()
                     .filter(m -> m.getNombre().toLowerCase().contains(buscar.toLowerCase()))
