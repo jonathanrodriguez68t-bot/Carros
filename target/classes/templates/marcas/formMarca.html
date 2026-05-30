@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!-- CAMBIO: Formulario cambiado de Trip a Marca -->
-<!-- CAMBIO: Campos: nombre, descripcion, paisOrigen, anioFundacion, velocidadMax, destacado, imagen -->
-<!-- CAMBIO: Action cambiado a /marcas/save -->
-<!-- CAMBIO: Diseño con tema oscuro/rojo del museo -->
-<!-- CAMBIO: Sirve tanto para crear (id=null) como para editar (id tiene valor) -->
+
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -99,6 +95,7 @@
                     <div class="card-form">
                         <!-- TITULO GOOD -->
                         <div class="card-header">
+                        <!-- Aqui se realiza marcas/save -->
                             <h4>&#9632; <span th:text="${accion ?: 'Formulario'}"></span> <span style="color:#fff;">de Marca</span></h4>
                         </div>
                         <div class="card-body">
@@ -106,8 +103,8 @@
                             <!-- AQUI ES DONDE APUNTA A LA MARCA -->
                             <form th:action="@{/marcas/save}" method="post" th:object="${marca}">
 
-                                <!-- Campo oculto para el id (necesario para editar) -->
-                                <!-- CAMBIO: En TripAN no había update; aquí se pasa el id para distinguir crear/editar -->
+                                <!-- campo ocualta para poder hacer Update en el id(osea al editarse) -->
+                                
                                 <input type="hidden" th:field="*{id}">
 
                                 <!-- Errores de validación -->
@@ -118,8 +115,8 @@
                                     </ul>
                                 </div>
 
-                                <!-- Fila 1: Nombre y País de Origen -->
-                                <!-- CAMBIO: Nombre del campo cambiado de "nombre del trip" a "nombre de la marca" -->
+                                <!--Nombre y País de Origen -->
+                                
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label>Nombre de la Marca</label>
@@ -129,7 +126,7 @@
                                                required>
                                     </div>
                                     <div class="col-md-6">
-                                        <!-- CAMBIO: Campo "paisOrigen" nuevo, no existía en TripAN -->
+                                        <!--  Campo "paisOrigen"  -->
                                         <label>País de Origen</label>
                                         <select class="form-select" name="paisOrigen" th:field="*{paisOrigen}">
                                             <option value="">Seleccione un país</option>
@@ -145,22 +142,27 @@
                                 </div>
 
                                 <!-- Fila 2: Año de fundación y Velocidad máxima -->
-                                <!-- CAMBIO: anioFundacion reemplaza a fecha; velocidadMax reemplaza a costo -->
+                                
                                 <div class="row mb-3">
                                     <div class="col-md-4">
                                         <label>Año de Fundación</label>
+                                                       <!-- Aqui es donde  se pueden utilizar las flechitas-->
+                                
+                                        
                                         <input type="number" class="form-control" name="anioFundacion"
                                                th:field="*{anioFundacion}"
                                                placeholder="Ej: 1947" min="1880" max="2024">
                                     </div>
                                     <div class="col-md-4">
                                         <label>Velocidad Máxima (km/h)</label>
+                                                       <!-- Aqui igual utilizacion de flechitas de 0.1 en 0.1 -->
+                                
                                         <input type="number" class="form-control" name="velocidadMax"
                                                th:field="*{velocidadMax}"
                                                placeholder="Ej: 340" step="0.1">
                                     </div>
                                     <div class="col-md-4">
-                                        <!-- CAMBIO: destacado mantiene misma lógica que TripAN (radio 1/0) -->
+                                        <!-- AQUI SE establece la parte de DESTACADOS -->
                                         <label>¿Destacado en el Museo?</label>
                                         <div class="mt-2">
                                             <div class="form-check">
@@ -182,7 +184,7 @@
                                 <!-- Fila 3: Descripción -->
                                 <div class="row mb-3">
                                     <div class="col-12">
-                                        <!-- CAMBIO: descripcion misma lógica pero para la marca -->
+                                        
                                         <label>Descripción de la Marca</label>
                                         <textarea class="form-control" name="descripcion"
                                                   th:field="*{descripcion}"
@@ -194,7 +196,7 @@
                                 <!-- Fila 4: Imagen -->
                                 <div class="row mb-4">
                                     <div class="col-md-6">
-                                        <!-- CAMBIO: nombre del campo "imagen" igual que TripAN -->
+                                        <!-- NOmbre del campo para poner la imagen -->
                                         <label>Nombre de Imagen (archivo)</label>
                                         <input type="text" class="form-control" name="imagen"
                                                th:field="*{imagen}"

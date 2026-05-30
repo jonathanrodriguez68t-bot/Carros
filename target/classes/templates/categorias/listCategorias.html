@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!-- CAMBIO: Listado de categorías completamente implementado (en TripAN solo era <h2>Lista Categoria</h2>) -->
-<!-- CAMBIO: Muestra todas las categorías con sus datos y botones de acción CRUD -->
+
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -68,12 +67,15 @@
             <a class="btn btn-nueva" th:href="@{/categorias/create}">+ Nueva Categoría</a>
         </div>
 
-        <!-- CAMBIO: Cards de categorías con CRUD completo (en TripAN era solo un <h2>) -->
+        
         <div th:each="cat : ${categorias}" class="cat-card">
             <div class="d-flex justify-content-between align-items-start">
                 <div>
                     <div class="mb-1">
                         <span class="id-badge me-2">#<span th:text="${cat.id}"></span></span>
+                        
+                          <!-- Aqui es donde se activa o se desactiva la caretegoria
+                          osea"Categoria activa en el museo" -->
                         <span th:if="${cat.activo}" class="badge-activo">ACTIVA</span>
                         <span th:unless="${cat.activo}" class="badge-inactivo">INACTIVA</span>
                     </div>
